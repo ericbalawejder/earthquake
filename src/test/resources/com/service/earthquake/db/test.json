@@ -1,0 +1,26 @@
+[
+  {
+    "time": "2017-09-07T21:53:50.480Z",
+    "latitude": 37.3486,
+    "longitude": -98.2119,
+    "depth": 8.92,
+    "mag": 2.5,
+    "magType": "mb_lg",
+    "nst": "",
+    "gap": 102,
+    "dmin": 0.169,
+    "rms": 0.49,
+    "net": "us",
+    "id": "us2000ahrz",
+    "updated": "2017-09-08T05:58:08.073Z",
+    "place": "17km WNW of Harper, Kansas",
+    "type": "earthquake",
+    "horizontalError": 2.2,
+    "depthError": 5.5,
+    "magError": 0.147,
+    "magNst": 12,
+    "status": "reviewed",
+    "locationSource": "us",
+    "magSource": "us"
+  }
+]
