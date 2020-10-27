@@ -3,6 +3,8 @@ package com.service.earthquake.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RawEarthquake {
 
@@ -87,6 +89,27 @@ public class RawEarthquake {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RawEarthquake that = (RawEarthquake) o;
+        return Objects.equals(time, that.time) &&
+                Objects.equals(latitude, that.latitude) &&
+                Objects.equals(longitude, that.longitude) &&
+                Objects.equals(depth, that.depth) &&
+                Objects.equals(magnitude, that.magnitude) &&
+                Objects.equals(magType, that.magType) &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(place, that.place) &&
+                Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(time, latitude, longitude, depth, magnitude, magType, id, place, type);
     }
 
     @Override
