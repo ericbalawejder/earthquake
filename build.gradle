@@ -1,0 +1,42 @@
+plugins {
+    id 'application'
+}
+
+group 'com.service.earthquake'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+project.ext {
+    junitVersion = '5.7.0'
+    mockitoVersion = '3.5.13'
+    dropWizardVersion = '2.0.14'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Dropwizard
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropWizardVersion
+
+    // Junit 5
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+}
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+mainClassName = "com.service.earthquake.configuration.EarthquakeApplication"
+
+run {
+    args 'server'
+}
