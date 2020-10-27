@@ -22,7 +22,6 @@ public class Earthquake {
     private String place;
     private String type;
 
-
     public Date getTime() {
         return this.time;
     }
