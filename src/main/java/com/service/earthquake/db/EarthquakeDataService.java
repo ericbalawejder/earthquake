@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class EarthquakeDataService {
 
+    private static final String FILE_PATH = "earthquake.json";
+
     public List<RawEarthquake> getRawEarthquakeData(String filePath) throws IOException {
         final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
 
@@ -25,7 +27,7 @@ public class EarthquakeDataService {
     }
 
     public List<Earthquake> getEarthquakes() throws IOException {
-        final List<RawEarthquake> rawEarthquakes = getRawEarthquakeData("earthquake.json");
+        final List<RawEarthquake> rawEarthquakes = getRawEarthquakeData(FILE_PATH);
 
         return rawEarthquakes.stream()
                 .map(mapRawEarthquakeToEarthquake)
