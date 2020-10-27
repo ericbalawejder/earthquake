@@ -15,18 +15,7 @@ class RawEarthquakeTest {
     }
 
     @Test
-    void getTime() {
-        rawEarthquake.setTime("2017-09-08T12:46:04.610Z");
-
-        String expected = "2017-09-08T12:46:04.610Z";
-
-        String actual = rawEarthquake.getTime();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setTime() {
+    void getAndSetTime() {
         rawEarthquake.setTime("2017-09-08T12:46:04.610Z");
 
         String expected = "2017-09-08T12:46:04.610Z";
