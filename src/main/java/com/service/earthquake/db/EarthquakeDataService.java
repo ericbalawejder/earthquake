@@ -16,22 +16,24 @@ import java.util.stream.Collectors;
 
 public class EarthquakeDataService {
 
-    private static final String FILE_PATH = "earthquake.json";
+    private final String filePath;
 
-    public List<RawEarthquake> getRawEarthquakeData(String filePath) throws IOException {
+    public EarthquakeDataService(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public List<Earthquake> getEarthquakes(List<RawEarthquake> rawEarthquakes) {
+        return rawEarthquakes.stream()
+                .map(mapRawEarthquakeToEarthquake)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<RawEarthquake> getRawEarthquakeData() throws IOException {
         final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
 
         final ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(jsonInputStream, new TypeReference<>() {});
-    }
-
-    public List<Earthquake> getEarthquakes() throws IOException {
-        final List<RawEarthquake> rawEarthquakes = getRawEarthquakeData(FILE_PATH);
-
-        return rawEarthquakes.stream()
-                .map(mapRawEarthquakeToEarthquake)
-                .collect(Collectors.toUnmodifiableList());
     }
 
     private Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake
