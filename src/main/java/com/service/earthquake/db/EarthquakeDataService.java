@@ -30,7 +30,6 @@ public class EarthquakeDataService {
 
     public List<RawEarthquake> getRawEarthquakeData() throws IOException {
         final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
-
         final ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(jsonInputStream, new TypeReference<>() {});

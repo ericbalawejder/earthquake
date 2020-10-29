@@ -11,12 +11,14 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DataResourceTest {
 
-    DataResource dataResource;
     EarthquakeDataService earthquakeDataService;
+    DataResource dataResource;
 
     @BeforeEach
     void setUp() {
@@ -43,5 +45,16 @@ class DataResourceTest {
         List<Earthquake> actual = dataResource.getEarthquakes(Optional.of("Harper, Kansas"));
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getEarthquakesThrowsException() {
+        IllegalArgumentException expected =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> dataResource.getEarthquakes(null));
+
+        assertThat(expected)
+                .hasMessage("Optional<String> reference cannot be null.");
     }
 }

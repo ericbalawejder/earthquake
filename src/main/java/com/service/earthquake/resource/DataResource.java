@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class DataResource {
 
-    final private EarthquakeDataService dataService = new EarthquakeDataService("earthquake.json");
-
     @GET
     public List<Earthquake> getEarthquakes(@QueryParam("filter") Optional<String> filter)
             throws IOException {
@@ -28,8 +26,9 @@ public class DataResource {
         if (filter == null) {
             throw new IllegalArgumentException("Optional<String> reference cannot be null.");
         }
-        List<RawEarthquake> rawEarthquakes = dataService.getRawEarthquakeData();
-        List<Earthquake> earthquakes = dataService.getEarthquakes(rawEarthquakes);
+        final EarthquakeDataService dataService = new EarthquakeDataService("earthquake.json");
+        final List<RawEarthquake> rawEarthquakes = dataService.getRawEarthquakeData();
+        final List<Earthquake> earthquakes = dataService.getEarthquakes(rawEarthquakes);
 
         return earthquakes.stream()
                 .filter(e -> containsIgnoreCase(e.getPlace(), filter.orElse("")))
