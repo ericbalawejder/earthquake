@@ -21,7 +21,7 @@ class DataResourceTest {
     DataResource dataResource;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         dataResource = new DataResource();
         earthquakeDataService = new EarthquakeDataService("test.json");
     }
@@ -57,4 +57,5 @@ class DataResourceTest {
         assertThat(expected)
                 .hasMessage("Optional<String> reference cannot be null.");
     }
+
 }

@@ -2,7 +2,6 @@ package com.service.earthquake.resource;
 
 import com.service.earthquake.db.EarthquakeDataService;
 import com.service.earthquake.entity.Earthquake;
-import com.service.earthquake.entity.RawEarthquake;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,11 +25,11 @@ public class DataResource {
         if (filter == null) {
             throw new IllegalArgumentException("Optional<String> reference cannot be null.");
         }
-        final EarthquakeDataService dataService = new EarthquakeDataService("earthquake.json");
-        final List<RawEarthquake> rawEarthquakes = dataService.getRawEarthquakeData();
-        final List<Earthquake> earthquakes = dataService.getEarthquakes(rawEarthquakes);
+        final EarthquakeDataService dataService =
+                new EarthquakeDataService("earthquake.json");
 
-        return earthquakes.stream()
+        return dataService.getEarthquakes()
+                .stream()
                 .filter(e -> containsIgnoreCase(e.getPlace(), filter.orElse("")))
                 .sorted(Comparator.comparing(Earthquake::getMagnitude)
                         .reversed()
@@ -59,4 +58,5 @@ public class DataResource {
         }
         return false;
     }
+
 }

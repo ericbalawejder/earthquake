@@ -17,25 +17,31 @@ import java.util.stream.Collectors;
 public class EarthquakeDataService {
 
     private final String filePath;
+    private final List<Earthquake> earthquakes;
 
-    public EarthquakeDataService(String filePath) {
+    public EarthquakeDataService(String filePath) throws IOException {
         this.filePath = filePath;
+        this.earthquakes = getEarthquakeData(getRawEarthquakeData());
     }
 
-    public List<Earthquake> getEarthquakes(List<RawEarthquake> rawEarthquakes) {
+    public List<Earthquake> getEarthquakes() {
+        return List.copyOf(earthquakes);
+    }
+
+    private List<Earthquake> getEarthquakeData(List<RawEarthquake> rawEarthquakes) {
         return rawEarthquakes.stream()
                 .map(mapRawEarthquakeToEarthquake)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<RawEarthquake> getRawEarthquakeData() throws IOException {
+    private List<RawEarthquake> getRawEarthquakeData() throws IOException {
         final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
         final ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(jsonInputStream, new TypeReference<>() {});
     }
 
-    private Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake
+    private final Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake
             = rawEarthquake -> {
 
         Earthquake earthquake = new Earthquake();
@@ -60,4 +66,5 @@ public class EarthquakeDataService {
         final ISO8601DateFormat dateFormat = new ISO8601DateFormat();
         return dateFormat.parse(time);
     }
+
 }
