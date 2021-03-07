@@ -21,11 +21,15 @@ public class EarthquakeDataService {
 
     public EarthquakeDataService(String filePath) throws IOException {
         this.filePath = filePath;
-        this.earthquakes = getEarthquakeData(getRawEarthquakeData());
+        this.earthquakes = getEarthquakeData(getRawEarthquakeData(filePath));
     }
 
     public List<Earthquake> getEarthquakes() {
         return List.copyOf(earthquakes);
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     private List<Earthquake> getEarthquakeData(List<RawEarthquake> rawEarthquakes) {
@@ -34,7 +38,7 @@ public class EarthquakeDataService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<RawEarthquake> getRawEarthquakeData() throws IOException {
+    private List<RawEarthquake> getRawEarthquakeData(String filePath) throws IOException {
         final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
         final ObjectMapper objectMapper = new ObjectMapper();
 

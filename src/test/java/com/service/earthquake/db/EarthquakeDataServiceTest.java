@@ -14,9 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EarthquakeDataServiceTest {
 
     private Earthquake earthquake;
+    private EarthquakeDataService earthquakeDataService;
 
     @BeforeEach
-    void setup() throws ParseException {
+    void setup() throws ParseException, IOException {
+        earthquakeDataService = new EarthquakeDataService("test.json");
+
         final ISO8601DateFormat dateFormat = new ISO8601DateFormat();
         earthquake = new Earthquake();
         earthquake.setTime(dateFormat.parse("2017-09-07T21:53:50.480Z"));
@@ -32,15 +35,20 @@ class EarthquakeDataServiceTest {
 
 
     @Test
-    void getEarthquakes() throws IOException {
+    void getEarthquakes() {
         List<Earthquake> expected = List.of(earthquake);
-
-        EarthquakeDataService earthquakeDataService =
-                new EarthquakeDataService("test.json");
 
         List<Earthquake> actual = earthquakeDataService.getEarthquakes();
 
         assertEquals(expected, actual);
     }
 
+    @Test
+    void getFilePath() {
+        String expected = "test.json";
+
+        String actual = earthquakeDataService.getFilePath();
+
+        assertEquals(expected, actual);
+    }
 }
