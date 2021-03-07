@@ -5,7 +5,7 @@ The endpoint /data provides a List of Earthquakes sorted by magnitude and time a
 
 To run the tests:
 ```
-$ gradle test
+$ ./gradlew test
 ```
 
 To run the server:
