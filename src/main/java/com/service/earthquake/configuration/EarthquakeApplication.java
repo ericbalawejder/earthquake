@@ -7,6 +7,12 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import java.util.EnumSet;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+
+import org.eclipse.jetty.servlets.CrossOriginFilter;
+
 public class EarthquakeApplication extends Application<EarthquakeConfiguration> {
 
     public static void main(String[] args) throws Exception {
@@ -24,6 +30,18 @@ public class EarthquakeApplication extends Application<EarthquakeConfiguration> 
     public void run(EarthquakeConfiguration configuration, Environment environment) {
         final DataResource resource = new DataResource();
         environment.jersey().register(resource);
+
+        // Enable CORS headers
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter("allowedOrigins", "*");
+        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }
 
     @Override
