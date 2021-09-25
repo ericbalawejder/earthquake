@@ -20,14 +20,14 @@ repositories {
 
 dependencies {
     // Dropwizard
-    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropWizardVersion
+    implementation group: 'io.dropwizard', name: 'dropwizard-core', version: dropWizardVersion
 
     // Junit 5
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 
     // AssertJ
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
 }
 
 test {
