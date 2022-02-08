@@ -1,6 +1,6 @@
 package com.service.earthquake.entity;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class EarthquakeTest {
 
     @Test
     void getAndSetTime() throws ParseException {
-        final ISO8601DateFormat dateFormat = new ISO8601DateFormat();
+        final StdDateFormat dateFormat = new StdDateFormat();
         earthquake.setTime(dateFormat.parse("2017-09-08T12:46:04.610Z"));
 
         Date expected = dateFormat.parse("2017-09-08T12:46:04.610Z");

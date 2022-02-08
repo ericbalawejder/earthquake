@@ -2,7 +2,7 @@ package com.service.earthquake.db;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.entity.Earthquake;
 import com.service.earthquake.entity.RawEarthquake;
 
@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class EarthquakeDataService {
 
@@ -35,7 +34,7 @@ public class EarthquakeDataService {
     private List<Earthquake> getEarthquakeData(List<RawEarthquake> rawEarthquakes) {
         return rawEarthquakes.stream()
                 .map(mapRawEarthquakeToEarthquake)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     private List<RawEarthquake> getRawEarthquakeData(String filePath) throws IOException {
@@ -67,7 +66,7 @@ public class EarthquakeDataService {
     };
 
     private Date convertStringToDate(String time) throws ParseException {
-        final ISO8601DateFormat dateFormat = new ISO8601DateFormat();
+        final StdDateFormat dateFormat = new StdDateFormat();
         return dateFormat.parse(time);
     }
 

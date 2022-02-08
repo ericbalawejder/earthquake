@@ -1,6 +1,6 @@
 package com.service.earthquake.db;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.entity.Earthquake;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class EarthquakeDataServiceTest {
     void setup() throws ParseException, IOException {
         earthquakeDataService = new EarthquakeDataService("test.json");
 
-        final ISO8601DateFormat dateFormat = new ISO8601DateFormat();
+        final StdDateFormat dateFormat = new StdDateFormat();
         earthquake = new Earthquake();
         earthquake.setTime(dateFormat.parse("2017-09-07T21:53:50.480Z"));
         earthquake.setLatitude(37.3486);

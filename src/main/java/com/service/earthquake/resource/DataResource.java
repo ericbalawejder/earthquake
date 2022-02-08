@@ -12,14 +12,28 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Path("/data")
+@Path("/earthquake")
 @Produces(MediaType.APPLICATION_JSON)
 public class DataResource {
 
     @GET
-    public List<Earthquake> getEarthquakes(@QueryParam("filter") Optional<String> filter)
+    @Path("/data")
+    public List<Earthquake> getAllEarthquakes() throws IOException {
+        final EarthquakeDataService dataService =
+                new EarthquakeDataService("earthquake.json");
+
+        return dataService.getEarthquakes()
+                .stream()
+                .sorted(Comparator.comparing(Earthquake::getMagnitude)
+                        .reversed()
+                        .thenComparing(Earthquake::getTime))
+                .toList();
+    }
+
+    @GET
+    @Path("/find")
+    public List<Earthquake> findEarthquakes(@QueryParam("filter") Optional<String> filter)
             throws IOException {
 
         if (filter == null) {
@@ -34,7 +48,7 @@ public class DataResource {
                 .sorted(Comparator.comparing(Earthquake::getMagnitude)
                         .reversed()
                         .thenComparing(Earthquake::getTime))
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     // Faster than regex match("(?i).*filter.*$") for large files

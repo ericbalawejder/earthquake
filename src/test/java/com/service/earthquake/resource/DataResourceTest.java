@@ -42,7 +42,7 @@ class DataResourceTest {
 
         List<Earthquake> expected = List.of(earthquake);
 
-        List<Earthquake> actual = dataResource.getEarthquakes(Optional.of("Harper, Kansas"));
+        List<Earthquake> actual = dataResource.findEarthquakes(Optional.of("Harper, Kansas"));
 
         assertEquals(expected, actual);
     }
@@ -52,7 +52,7 @@ class DataResourceTest {
         IllegalArgumentException expected =
                 assertThrows(
                         IllegalArgumentException.class,
-                        () -> dataResource.getEarthquakes(null));
+                        () -> dataResource.findEarthquakes(null));
 
         assertThat(expected)
                 .hasMessage("Optional<String> reference cannot be null.");

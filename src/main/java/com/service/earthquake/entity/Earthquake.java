@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 
-@SuppressWarnings("deprecation")
 @JsonSerialize(include = Inclusion.NON_DEFAULT)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Earthquake {
@@ -117,18 +116,16 @@ public class Earthquake {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("***Earthquake***\n");
-        stringBuilder.append("time = " + time + "\n");
-        stringBuilder.append("latitude = " + latitude + "\n");
-        stringBuilder.append("longitude = " + longitude + "\n");
-        stringBuilder.append("depth = " + depth + "\n");
-        stringBuilder.append("magnitude = " + magnitude + "\n");
-        stringBuilder.append("magType = " + magType + "\n");
-        stringBuilder.append("id = " + id + "\n");
-        stringBuilder.append("place = " + place + "\n");
-        stringBuilder.append("type = " + type + "\n");
-        return stringBuilder.toString();
+        return "***Earthquake***\n" +
+                "time = " + time + "\n" +
+                "latitude = " + latitude + "\n" +
+                "longitude = " + longitude + "\n" +
+                "depth = " + depth + "\n" +
+                "magnitude = " + magnitude + "\n" +
+                "magType = " + magType + "\n" +
+                "id = " + id + "\n" +
+                "place = " + place + "\n" +
+                "type = " + type + "\n";
     }
-}
 
+}

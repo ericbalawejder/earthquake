@@ -1,17 +1,16 @@
 package com.service.earthquake.configuration;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.resource.DataResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 
-import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
-
-import org.eclipse.jetty.servlets.CrossOriginFilter;
+import java.util.EnumSet;
 
 public class EarthquakeApplication extends Application<EarthquakeConfiguration> {
 
@@ -23,7 +22,7 @@ public class EarthquakeApplication extends Application<EarthquakeConfiguration> 
     public void initialize(Bootstrap<EarthquakeConfiguration> bootstrap) {
         bootstrap.getObjectMapper()
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        bootstrap.getObjectMapper().setDateFormat(new ISO8601DateFormat());
+        bootstrap.getObjectMapper().setDateFormat(new StdDateFormat());
     }
 
     @Override
@@ -48,4 +47,5 @@ public class EarthquakeApplication extends Application<EarthquakeConfiguration> 
     public String getName() {
         return "Earthquake Data Service";
     }
+
 }
