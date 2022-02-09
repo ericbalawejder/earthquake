@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.entity.Earthquake;
 import com.service.earthquake.entity.RawEarthquake;
+import com.service.earthquake.exception.EarthquakeDateParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,22 +48,21 @@ public class EarthquakeDataService {
     private final Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake
             = rawEarthquake -> {
 
-        Earthquake earthquake = new Earthquake();
         try {
-            earthquake.setTime(convertStringToDate(rawEarthquake.getTime()));
-            earthquake.setLatitude(rawEarthquake.getLatitude());
-            earthquake.setLongitude(rawEarthquake.getLongitude());
-            earthquake.setDepth(rawEarthquake.getDepth());
-            earthquake.setMagnitude(rawEarthquake.getMagnitude());
-            earthquake.setMagType(rawEarthquake.getMagType());
-            earthquake.setId(rawEarthquake.getId());
-            earthquake.setPlace(rawEarthquake.getPlace());
-            earthquake.setType(rawEarthquake.getType());
-
+            return new Earthquake(
+                    convertStringToDate(rawEarthquake.getTime()),
+                    rawEarthquake.getLatitude(),
+                    rawEarthquake.getLongitude(),
+                    rawEarthquake.getDepth(),
+                    rawEarthquake.getMagnitude(),
+                    rawEarthquake.getMagType(),
+                    rawEarthquake.getId(),
+                    rawEarthquake.getPlace(),
+                    rawEarthquake.getType());
         } catch (ParseException e) {
             e.printStackTrace();
+            throw new EarthquakeDateParseException("can not parse date from type RawEarthquake");
         }
-        return earthquake;
     };
 
     private Date convertStringToDate(String time) throws ParseException {

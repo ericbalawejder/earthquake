@@ -1,13 +1,12 @@
 package com.service.earthquake.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
-
-@JsonSerialize(include = Inclusion.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Earthquake {
 
@@ -20,6 +19,23 @@ public class Earthquake {
     private String id;
     private String place;
     private String type;
+
+    public Earthquake() {
+    }
+
+    public Earthquake(Date time, Double latitude, Double longitude,
+                      Double depth, Double magnitude, String magType,
+                      String id, String place, String type) {
+        this.time = time;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.depth = depth;
+        this.magnitude = magnitude;
+        this.magType = magType;
+        this.id = id;
+        this.place = place;
+        this.type = type;
+    }
 
     public Date getTime() {
         return this.time;
