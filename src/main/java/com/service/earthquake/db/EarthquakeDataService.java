@@ -16,20 +16,14 @@ import java.util.function.Function;
 
 public class EarthquakeDataService {
 
-    private final String filePath;
     private final List<Earthquake> earthquakes;
 
     public EarthquakeDataService(String filePath) throws IOException {
-        this.filePath = filePath;
         this.earthquakes = getEarthquakeData(getRawEarthquakeData(filePath));
     }
 
     public List<Earthquake> getEarthquakes() {
         return List.copyOf(earthquakes);
-    }
-
-    public String getFilePath() {
-        return filePath;
     }
 
     private List<Earthquake> getEarthquakeData(List<RawEarthquake> rawEarthquakes) {

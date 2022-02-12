@@ -37,18 +37,8 @@ class EarthquakeDataServiceTest {
     @Test
     void getEarthquakes() {
         List<Earthquake> expected = List.of(earthquake);
-
         List<Earthquake> actual = earthquakeDataService.getEarthquakes();
-
         assertEquals(expected, actual);
     }
 
-    @Test
-    void getFilePath() {
-        String expected = "test.json";
-
-        String actual = earthquakeDataService.getFilePath();
-
-        assertEquals(expected, actual);
-    }
 }

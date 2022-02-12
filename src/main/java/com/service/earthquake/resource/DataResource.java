@@ -17,11 +17,17 @@ import java.util.Optional;
 @Produces(MediaType.APPLICATION_JSON)
 public class DataResource {
 
+    private final String fileName;
+
+    public DataResource(String fileName) {
+        this.fileName = fileName;
+    }
+
     @GET
     @Path("/data")
     public List<Earthquake> getAllEarthquakes() throws IOException {
         final EarthquakeDataService dataService =
-                new EarthquakeDataService("earthquake.json");
+                new EarthquakeDataService(fileName);
 
         return dataService.getEarthquakes()
                 .stream()
@@ -40,7 +46,7 @@ public class DataResource {
             throw new IllegalArgumentException("Optional<String> reference cannot be null.");
         }
         final EarthquakeDataService dataService =
-                new EarthquakeDataService("earthquake.json");
+                new EarthquakeDataService(fileName);
 
         return dataService.getEarthquakes()
                 .stream()
@@ -49,6 +55,10 @@ public class DataResource {
                         .reversed()
                         .thenComparing(Earthquake::getTime))
                 .toList();
+    }
+
+    public String getFileName() {
+        return this.fileName;
     }
 
     // Faster than regex match("(?i).*filter.*$") for large files

@@ -27,12 +27,12 @@ public class EarthquakeApplication extends Application<EarthquakeConfiguration> 
 
     @Override
     public void run(EarthquakeConfiguration configuration, Environment environment) {
-        final DataResource resource = new DataResource();
+        final DataResource resource = new DataResource("earthquake.json");
         environment.jersey().register(resource);
 
         // Enable CORS headers
-        final FilterRegistration.Dynamic cors =
-                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+        final FilterRegistration.Dynamic cors = environment.servlets()
+                .addFilter("CORS", CrossOriginFilter.class);
 
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
