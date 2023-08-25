@@ -2,16 +2,22 @@ plugins {
     id 'application'
 }
 
+application {
+    mainClass.set("com.service.earthquake.configuration.EarthquakeApplication")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
 group 'com.service.earthquake'
 version '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 17
-targetCompatibility = 17
-
 project.ext {
-    junitVersion = '5.8.2'
-    mockitoVersion = '4.3.1'
-    dropWizardVersion = '2.0.28'
+    junitVersion = '5.10.0'
+    junitPlatformVersion = '1.10.0'
+    dropWizardVersion = '2.1.7'
+    assertJVersion = '3.24.2'
 }
 
 repositories {
@@ -25,9 +31,10 @@ dependencies {
     // Junit 5
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: junitPlatformVersion
 
     // AssertJ
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: assertJVersion
 }
 
 test {
@@ -38,8 +45,6 @@ test {
         events = ["passed", "failed", "skipped"]
     }
 }
-
-mainClassName = "com.service.earthquake.configuration.EarthquakeApplication"
 
 run {
     args 'server'
