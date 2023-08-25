@@ -20,8 +20,7 @@ public class EarthquakeApplication extends Application<EarthquakeConfiguration> 
 
   @Override
   public void initialize(Bootstrap<EarthquakeConfiguration> bootstrap) {
-    bootstrap.getObjectMapper()
-        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    bootstrap.getObjectMapper().configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     bootstrap.getObjectMapper().setDateFormat(new StdDateFormat());
   }
 

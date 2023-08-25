@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +24,8 @@ public class DataResource {
 
   @GET
   @Path("/data")
-  public List<Earthquake> getAllEarthquakes() throws IOException {
-    final EarthquakeDataService dataService =
-        new EarthquakeDataService(fileName);
+  public List<Earthquake> getAllEarthquakes() {
+    final EarthquakeDataService dataService = new EarthquakeDataService(fileName);
 
     return dataService.getEarthquakes()
         .stream()
@@ -39,14 +37,11 @@ public class DataResource {
 
   @GET
   @Path("/find")
-  public List<Earthquake> findEarthquakes(@QueryParam("filter") Optional<String> filter)
-      throws IOException {
-
+  public List<Earthquake> findEarthquakes(@QueryParam("filter") Optional<String> filter) {
     if (filter == null) {
       throw new IllegalArgumentException("Optional<String> reference cannot be null.");
     }
-    final EarthquakeDataService dataService =
-        new EarthquakeDataService(fileName);
+    final EarthquakeDataService dataService = new EarthquakeDataService(fileName);
 
     return dataService.getEarthquakes()
         .stream()

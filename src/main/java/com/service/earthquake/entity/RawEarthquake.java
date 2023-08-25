@@ -114,7 +114,7 @@ public class RawEarthquake {
 
   @Override
   public String toString() {
-    String stringBuilder = "*RawEarthquakeData*\n" +
+    return "*RawEarthquakeData*\n" +
         "time = " + time + "\n" +
         "latitude = " + latitude + "\n" +
         "longitude = " + longitude + "\n" +
@@ -124,6 +124,6 @@ public class RawEarthquake {
         "id = " + id + "\n" +
         "place = " + place + "\n" +
         "type = " + type + "\n";
-    return stringBuilder;
   }
+
 }

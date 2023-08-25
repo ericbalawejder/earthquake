@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.entity.Earthquake;
 import com.service.earthquake.entity.RawEarthquake;
-import com.service.earthquake.exception.EarthquakeDateParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +17,7 @@ public class EarthquakeDataService {
 
   private final List<Earthquake> earthquakes;
 
-  public EarthquakeDataService(String filePath) throws IOException {
+  public EarthquakeDataService(String filePath) {
     this.earthquakes = getEarthquakeData(getRawEarthquakeData(filePath));
   }
 
@@ -32,37 +31,32 @@ public class EarthquakeDataService {
         .toList();
   }
 
-  private List<RawEarthquake> getRawEarthquakeData(String filePath) throws IOException {
-    final InputStream jsonInputStream = getClass().getResourceAsStream(filePath);
-    final ObjectMapper objectMapper = new ObjectMapper();
-
-    return objectMapper.readValue(jsonInputStream, new TypeReference<>() {
-    });
+  private List<RawEarthquake> getRawEarthquakeData(String filePath) {
+    try (InputStream jsonInputStream = getClass().getResourceAsStream(filePath)) {
+      return new ObjectMapper().readValue(jsonInputStream, new TypeReference<>() {
+      });
+    } catch (IOException ioException) {
+      throw new RuntimeException(ioException);
+    }
   }
 
-  private final Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake
-      = rawEarthquake -> {
+  private final Function<RawEarthquake, Earthquake> mapRawEarthquakeToEarthquake = rawEarthquake -> new Earthquake(
+      convertStringToDate(rawEarthquake.getTime()),
+      rawEarthquake.getLatitude(),
+      rawEarthquake.getLongitude(),
+      rawEarthquake.getDepth(),
+      rawEarthquake.getMagnitude(),
+      rawEarthquake.getMagType(),
+      rawEarthquake.getId(),
+      rawEarthquake.getPlace(),
+      rawEarthquake.getType());
 
+  private Date convertStringToDate(String time) {
     try {
-      return new Earthquake(
-          convertStringToDate(rawEarthquake.getTime()),
-          rawEarthquake.getLatitude(),
-          rawEarthquake.getLongitude(),
-          rawEarthquake.getDepth(),
-          rawEarthquake.getMagnitude(),
-          rawEarthquake.getMagType(),
-          rawEarthquake.getId(),
-          rawEarthquake.getPlace(),
-          rawEarthquake.getType());
-    } catch (ParseException e) {
-      e.printStackTrace();
-      throw new EarthquakeDateParseException("can not parse date from type RawEarthquake");
+      return new StdDateFormat().parse(time);
+    } catch (ParseException parseException) {
+      throw new RuntimeException(parseException);
     }
-  };
-
-  private Date convertStringToDate(String time) throws ParseException {
-    final StdDateFormat dateFormat = new StdDateFormat();
-    return dateFormat.parse(time);
   }
 
 }
