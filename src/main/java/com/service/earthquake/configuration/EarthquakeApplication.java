@@ -3,13 +3,13 @@ package com.service.earthquake.configuration;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.service.earthquake.resource.DataResource;
-import io.dropwizard.Application;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
+import io.dropwizard.core.Application;
+import io.dropwizard.core.setup.Bootstrap;
+import io.dropwizard.core.setup.Environment;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.FilterRegistration;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
 import java.util.EnumSet;
 
 public class EarthquakeApplication extends Application<EarthquakeConfiguration> {

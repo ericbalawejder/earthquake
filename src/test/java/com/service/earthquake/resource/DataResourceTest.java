@@ -6,7 +6,6 @@ import com.service.earthquake.entity.Earthquake;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
@@ -21,13 +20,13 @@ class DataResourceTest {
   DataResource dataResource;
 
   @BeforeEach
-  void setUp() throws IOException {
+  void setUp() {
     dataResource = new DataResource("test.json");
     earthquakeDataService = new EarthquakeDataService(dataResource.getFileName());
   }
 
   @Test
-  void getEarthquakes() throws IOException, ParseException {
+  void getEarthquakes() throws ParseException {
     Earthquake earthquake = new Earthquake(
         new StdDateFormat().parse("2017-09-07T21:53:50.480Z"),
         37.3486,
@@ -48,13 +47,10 @@ class DataResourceTest {
 
   @Test
   void getEarthquakesThrowsException() {
-    IllegalArgumentException expected =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> dataResource.findEarthquakes(null));
+    IllegalArgumentException expected = assertThrows(
+        IllegalArgumentException.class, () -> dataResource.findEarthquakes(null));
 
-    assertThat(expected)
-        .hasMessage("Optional<String> reference cannot be null.");
+    assertThat(expected).hasMessage("Optional<String> reference cannot be null.");
   }
 
 }

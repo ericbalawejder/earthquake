@@ -17,7 +17,7 @@ class EarthquakeDataServiceTest {
   private EarthquakeDataService earthquakeDataService;
 
   @BeforeEach
-  void setup() throws ParseException, IOException {
+  void setup() throws ParseException {
     earthquakeDataService = new EarthquakeDataService("test.json");
 
     final StdDateFormat dateFormat = new StdDateFormat();
@@ -32,7 +32,6 @@ class EarthquakeDataServiceTest {
     earthquake.setPlace("17km WNW of Harper, Kansas");
     earthquake.setType("earthquake");
   }
-
 
   @Test
   void getEarthquakes() {

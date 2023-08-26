@@ -16,7 +16,7 @@ version '0.0.1-SNAPSHOT'
 project.ext {
     junitVersion = '5.10.0'
     junitPlatformVersion = '1.10.0'
-    dropWizardVersion = '2.1.7'
+    dropWizardVersion = '4.0.1'
     assertJVersion = '3.24.2'
 }
 
